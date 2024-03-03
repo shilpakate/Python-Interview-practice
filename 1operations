@@ -1,0 +1,10 @@
+
+#categorical Data in pandas
+import pandas as pd
+people=["Baby","child","Young","old"]
+codes=[0,1,2,3]
+people_cat=pd.Categorical.from_codes(codes,people)
+print(people_cat)
+Ouput like as below::
+['Baby', 'child', 'Young', 'old']
+Categories (4, object): ['Baby', 'child', 'Young', 'old']
