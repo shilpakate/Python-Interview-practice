@@ -1,0 +1,24 @@
+# 11.	 Write a Python program to get a string from a given string where all occurrences of its first char have been changed to '$', except the first char itself.
+  Sample String : 'restart'
+   Expected Result : 'resta$t'
+
+
+def replace_first_char_occurrences(input_string):
+    if len(input_string) <= 1:
+        return input_string  # Return the string as is if it's empty or has only one character
+
+    first_char = input_string[0]
+    modified_string = first_char  # Initialize the modified string with the first character
+
+    for char in input_string[1:]:
+        if char == first_char:
+            modified_string += '$'  # Replace occurrences of the first character with '$'
+        else:
+            modified_string += char  # Keep other characters unchanged
+
+    return modified_string
+
+# Example usage:
+sample_string = 'restart'
+result = replace_first_char_occurrences(sample_string)
+print("Expected Result:", result)
