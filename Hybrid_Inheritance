@@ -1,0 +1,18 @@
+class vehicle:
+    def drive(self):
+        def drive(self):
+            print("Vehicle is being driven")
+class car(vehicle):
+    def drive(self):
+        print("Car is Driving")
+    def honk(self):
+        print("Car is honking")
+class Truck(vehicle):
+    def load(self):
+        print("Truck is loading")
+c1= car()
+c1.drive()
+c1.honk()
+
+t1= Truck()
+t1.load()
