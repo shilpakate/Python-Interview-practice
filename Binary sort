@@ -1,0 +1,39 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+def bubble_sort(arr):
+    n = len(arr)
+    swaps = 0
+    for i in range(n):
+        # Flag to check if any swap occurs in the current pass
+        swapped = False
+        for j in range(0, n-i-1):
+            # Swap if the element found is greater than the next element
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                swaps += 1
+                swapped = True
+        # If no two elements were swapped in the inner loop, the array is already sorted
+        if not swapped:
+            break
+    return swaps
+
+if __name__ == '__main__':
+    n = int(input().strip())
+
+    a = list(map(int, input().rstrip().split()))
+
+    # Sort the array using bubble sort and get the number of swaps
+    swaps = bubble_sort(a)
+
+    # Print the number of swaps
+    print("Array is sorted in", swaps, "swaps.")
+
+    # Print the first and last elements
+    print("First Element:", a[0])
+    print("Last Element:", a[-1])
