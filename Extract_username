@@ -1,0 +1,17 @@
+import re
+
+def main():
+    n = int(input().strip())
+    gmail_users = []
+
+    for _ in range(n):
+        first_name, email = input().strip().split()
+        if re.match(r'.+@gmail\.com', email):
+            gmail_users.append(first_name)
+
+    gmail_users.sort()
+    for name in gmail_users:
+        print(name)
+
+if __name__ == "__main__":
+    main()
