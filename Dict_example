@@ -1,0 +1,58 @@
+def display_students(students):
+    print("Roll numbers and names of all students:")
+    for roll, name in students.items():
+        print(f"Roll Number: {roll}, Name: {name}")
+
+def add_student(students, roll, name):
+    students[roll] = name
+    print("Student added successfully.")
+
+def delete_student(students, roll):
+    if roll in students:
+        del students[roll]
+        print("Student record deleted successfully.")
+    else:
+        print("Roll number not found.")
+
+def modify_student_name(students, roll, new_name):
+    if roll in students:
+        students[roll] = new_name
+        print("Student name modified successfully.")
+    else:
+        print("Roll number not found.")
+
+# Main program
+students = {}
+
+# Add some initial data for demonstration purposes
+students[101] = "John"
+students[102] = "Alice"
+students[103] = "Bob"
+
+while True:
+    print("\nMenu:")
+    print("1. Display students")
+    print("2. Add a new student")
+    print("3. Delete a student")
+    print("4. Modify student's name")
+    print("5. Exit")
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        display_students(students)
+    elif choice == 2:
+        roll = int(input("Enter roll number of the new student: "))
+        name = input("Enter name of the new student: ")
+        add_student(students, roll, name)
+    elif choice == 3:
+        roll = int(input("Enter roll number of the student to delete: "))
+        delete_student(students, roll)
+    elif choice == 4:
+        roll = int(input("Enter roll number of the student to modify: "))
+        new_name = input("Enter new name: ")
+        modify_student_name(students, roll, new_name)
+    elif choice == 5:
+        print("Exiting program...")
+        break
+    else:
+        print("Invalid choice! Please enter a valid option.")
