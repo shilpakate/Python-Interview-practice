@@ -1,0 +1,316 @@
+# create connectivity and create database  Part 1
+import mysql.connector
+# conn=mysql.connector.connect(host="localhost",user='root',password='root')
+# cur=conn.cursor()
+#Create database Hosp_data
+# cur.execute('create database Hosp_data')
+# conn.commit()
+##Connect to database
+conn=mysql.connector.connect(host="localhost",user='root',password='root',database='Hosp_data')
+cur=conn.cursor()
+#1. Create TABLE Hospital
+# sql='CREATE TABLE Hospital (Hospital_id INT PRIMARY KEY,Hospital_name VARCHAR(100),bed_count INT);'
+# cur.execute(sql)
+# conn.commit()
+# conn.close()
+# print('Done')
+# cur.execute("SHOW TABLES like Hosp%")
+#2. Add data
+# Define the SQL statement for insertion
+# sql = '''INSERT INTO Hospital (Hospital_id, Hospital_name, bed_count)
+#          VALUES (%s, %s, %s)'''
+#
+# # Define the values to be inserted
+# values = [
+#     (1, 'City Hospital', 300),
+#     (2, 'General Hospital', 250),
+#     (3, 'Community Hospital', 200)
+# ]
+#
+# # Execute the SQL statement with the values
+# cur.executemany(sql, values)
+#
+# # Commit the transaction to save the changes
+# conn.commit()
+#
+# # Close the cursor and database connection
+# cur.close()
+# conn.close()
+##3. Create table Doctor
+
+# sql='CREATE TABLE Doctor (Doctor_id INT PRIMARY KEY,Doctor_name VARCHAR(100),Hospital_id INT,JoiningDate DATE,Speciality VARCHAR(100),Salary DECIMAL(10, 2),Experience INT,FOREIGN KEY (Hospital_id) REFERENCES Hospital(Hospital_id));'
+# cur.execute(sql)
+# conn.commit()
+# conn.close()
+# print('Done')
+# #cur.execute("SHOW TABLES like Doctor%")
+
+# ## Add data into Doctor Table
+# # Define the SQL statement for insertion
+# sql = '''INSERT INTO Doctor (Doctor_id, Doctor_name, Hospital_id, JoiningDate, Speciality, Salary, Experience)
+#          VALUES (%s, %s, %s, %s, %s, %s, %s)'''
+# # Define the values to be inserted
+# values = [
+#     (1, 'Dr. Smith', 1, '2022-01-01', 'Cardiologist', 100000, 5),
+#     (2, 'Dr. Johnson', 2, '2022-02-01', 'Pediatrician', 90000, 8),
+#     (3, 'Dr. Williams', 3, '2022-03-01', 'Orthopedic Surgeon', 120000, 10),
+#     (4, 'Dr. Brown', 1, '2022-04-01', 'Neurologist', 110000, None),
+#     (5, 'Dr. Davis', 2, '2022-05-01', 'Oncologist', 130000, 6),
+#     (6, 'Dr. Miller', 3, '2022-06-01', 'Dermatologist', 95000, None),
+#     (7, 'Dr. Wilson', 1, '2022-07-01', 'Gynecologist', 105000, 4),
+#     (8, 'Dr. Martinez', 2, '2022-08-01', 'Psychiatrist', 115000, None),
+#     (9, 'Dr. Anderson', 3, '2022-09-01', 'ENT Specialist', 100000, 7)
+#     ]
+# # Execute the SQL statement with the values
+# cur.executemany(sql, values)
+#
+# # Commit the transaction to save the changes
+# conn.commit()
+#
+# # Close the cursor and database connection
+# cur.close()
+# conn.close()
+#Questions:
+
+#1: Connect to your database server and print its version
+# Execute a query to get the server version
+# cur.execute("SELECT version();")
+#
+# # Fetch the result
+# db_version = cur.fetchone()
+#
+# # Print the server version
+# print("Database version:", db_version[0])
+#
+# # Close the cursor and connection
+# cur.close()
+# conn.close()
+
+# #2.Fetch Hospital and Doctor Information using hospital Id and doctor Id
+# sql='''SELECT
+#     hospitals.Hospital_id,
+#     hospitals.Hospital_name,
+#     hospitals.bed_count,
+#     doctors.Doctor_id,
+#     doctors.Doctor_name,
+#     doctors.JoiningDate,
+#     doctors.Speciality,
+#     doctors.Salary,
+#     doctors.Experience
+# FROM
+#     Hospital hospitals
+# JOIN
+#     Doctor doctors ON hospitals.Hospital_id = doctors.Hospital_id
+# WHERE
+#     hospitals.Hospital_id = 2
+#     AND doctors.Doctor_id = 2
+# '''
+# cur.execute(sql)
+#
+# ## Fetch all rows from the result set
+# rows = cur.fetchall()
+#
+# # Iterate over the rows and print or process them as needed
+# for row in rows:
+#     print(row)
+#
+# # Close cursor and connection
+# cur.close()
+# conn.close()
+##3.Get the list Of doctors as per the given specialty and salary
+sql='''
+SELECT 
+    Doctor_id,
+    Doctor_name,
+    JoiningDate,
+    Salary,
+    Experience
+FROM 
+    Doctor
+WHERE 
+    Speciality = 'Pediatrician'
+    AND Salary >=  90000
+    AND Salary <= 111111;
+'''
+
+cur.execute(sql)
+
+## Fetch all rows from the result set
+rows = cur.fetchall()
+
+# Iterate over the rows and print or process them as needed
+for row in rows:
+    print(row)
+
+# Close cursor and connection
+cur.close()
+conn.close()
+"C:\Users\One\PycharmProjects\CorePythonB984\Advanced Assignment_database.py" 
+Database version: 8.0.36
+"C:\Users\One\PycharmProjects\CorePythonB984\Advanced Assignment_database.py" 
+(2, 'Dr. Johnson', datetime.date(2022, 2, 1), Decimal('90000.00'), 8)
+import mysql.connector
+def get_doctors(hospital_id):
+    try:
+        # Connect to the database
+        ##Connect to database
+        conn = mysql.connector.connect(host="localhost",
+                                       user='root',
+                                       password='root',
+                                       database='Hosp_data'
+                                      )
+
+        # Create a cursor object using the connection
+        cur = conn.cursor()
+
+        # SQL query to fetch doctors from a given hospital ID
+        sql_query = '''
+            SELECT 
+                Doctor.Doctor_id,
+                Doctor.Doctor_name,
+                Doctor.JoiningDate,
+                Doctor.Speciality,
+                Doctor.Salary,
+                Doctor.Experience,
+                Hospital.Hospital_name
+            FROM 
+                Doctor
+            JOIN 
+                Hospital ON Doctor.Hospital_id = Hospital.Hospital_id
+            WHERE 
+                Doctor.Hospital_id = %s;
+        '''
+
+        # Execute the query
+        cur.execute(sql_query, (hospital_id,))
+
+        # Fetch all the rows
+        doctors = cur.fetchall()
+
+        # Print the results
+        for doctor in doctors:
+            print("Doctor ID:", doctor[0])
+            print("Doctor Name:", doctor[1])
+            print("Joining Date:", doctor[2])
+            print("Speciality:", doctor[3])
+            print("Salary:", doctor[4])
+            print("Experience:", doctor[5])
+            print("Hospital Name:", doctor[6])
+            print("----------------------------------------")
+
+        # Close the cursor and connection
+        cur.close()
+        conn.close()
+
+    except (Exception, mysql.connector.Error) as error:
+        print("Error while fetching data from PostgreSQL", error)
+
+
+# Call the function with the hospital ID
+get_doctors(2)
+
+
+C:\Users\One\PycharmProjects\CorePythonB984\.venv\Scripts\python.exe "C:\Users\One\PycharmProjects\CorePythonB984\Advanced Assignment_Database_Part2.py" 
+Doctor ID: 2
+Doctor Name: Dr. Johnson
+Joining Date: 2022-02-01
+Speciality: Pediatrician
+Salary: 90000.00
+Experience: 8
+Hospital Name: General Hospital
+----------------------------------------
+Doctor ID: 5
+Doctor Name: Dr. Davis
+Joining Date: 2022-05-01
+Speciality: Oncologist
+Salary: 130000.00
+Experience: 7
+Hospital Name: General Hospital
+----------------------------------------
+Doctor ID: 8
+Doctor Name: Dr. Martinez
+Joining Date: 2022-08-01
+Speciality: Psychiatrist
+Salary: 115000.00
+Experience: None
+Hospital Name: General Hospital
+----------------------------------------
+
+Process finished with exit code 0
+import mysql.connector
+
+
+def update_doctor_experience(doctor_id):
+    try:
+        # Connect to the database
+        conn = mysql.connector.connect(host="localhost",
+                                       user='root',
+                                       password='root',
+                                       database='Hosp_data'
+                                       )
+
+        # Create a cursor object using the connection
+        cur = conn.cursor()
+
+        # SQL query to update doctor experience
+        sql_query = '''
+            UPDATE Doctor
+            SET Experience = Experience + 1
+            WHERE Doctor_id = %s;
+        '''
+
+        # Execute the query
+        cur.execute(sql_query, (doctor_id,))
+
+        # Commit the transaction
+        conn.commit()
+
+        # Check if any rows were affected
+        if cur.rowcount > 0:
+            print("Doctor's experience updated successfully.")
+        else:
+            print("Doctor with ID", doctor_id, "not found.")
+
+        # Close the cursor and connection
+        cur.close()
+        conn.close()
+
+
+    except (Exception, mysql.connector.Error) as error:
+        print("Error while updating doctor's experience:", error)
+
+
+# Call the function with the doctor ID
+update_doctor_experience(5)
+
+
+mysql> select * from Doctor;
++-----------+--------------+-------------+-------------+--------------------+-----------+------------+
+| Doctor_id | Doctor_name  | Hospital_id | JoiningDate | Speciality         | Salary    | Experience |
++-----------+--------------+-------------+-------------+--------------------+-----------+------------+
+|         1 | Dr. Smith    |           1 | 2022-01-01  | Cardiologist       | 100000.00 |          5 |
+|         2 | Dr. Johnson  |           2 | 2022-02-01  | Pediatrician       |  90000.00 |          8 |
+|         3 | Dr. Williams |           3 | 2022-03-01  | Orthopedic Surgeon | 120000.00 |         10 |
+|         4 | Dr. Brown    |           1 | 2022-04-01  | Neurologist        | 110000.00 |       NULL |
+|         5 | Dr. Davis    |           2 | 2022-05-01  | Oncologist         | 130000.00 |          6 |
+|         6 | Dr. Miller   |           3 | 2022-06-01  | Dermatologist      |  95000.00 |       NULL |
+|         7 | Dr. Wilson   |           1 | 2022-07-01  | Gynecologist       | 105000.00 |          4 |
+|         8 | Dr. Martinez |           2 | 2022-08-01  | Psychiatrist       | 115000.00 |       NULL |
+|         9 | Dr. Anderson |           3 | 2022-09-01  | ENT Specialist     | 100000.00 |          7 |
++-----------+--------------+-------------+-------------+--------------------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from Doctor;
++-----------+--------------+-------------+-------------+--------------------+-----------+------------+
+| Doctor_id | Doctor_name  | Hospital_id | JoiningDate | Speciality         | Salary    | Experience |
++-----------+--------------+-------------+-------------+--------------------+-----------+------------+
+|         1 | Dr. Smith    |           1 | 2022-01-01  | Cardiologist       | 100000.00 |          5 |
+|         2 | Dr. Johnson  |           2 | 2022-02-01  | Pediatrician       |  90000.00 |          8 |
+|         3 | Dr. Williams |           3 | 2022-03-01  | Orthopedic Surgeon | 120000.00 |         10 |
+|         4 | Dr. Brown    |           1 | 2022-04-01  | Neurologist        | 110000.00 |       NULL |
+|         5 | Dr. Davis    |           2 | 2022-05-01  | Oncologist         | 130000.00 |          7 |
+|         6 | Dr. Miller   |           3 | 2022-06-01  | Dermatologist      |  95000.00 |       NULL |
+|         7 | Dr. Wilson   |           1 | 2022-07-01  | Gynecologist       | 105000.00 |          4 |
+|         8 | Dr. Martinez |           2 | 2022-08-01  | Psychiatrist       | 115000.00 |       NULL |
+|         9 | Dr. Anderson |           3 | 2022-09-01  | ENT Specialist     | 100000.00 |          7 |
++-----------+--------------+-------------+-------------+--------------------+-----------+------------+
