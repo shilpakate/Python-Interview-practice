@@ -1,0 +1,20 @@
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': [1, 2, 3, 4, 5],
+        'B': ['foo', 'bar', 'foo', 'baz', 'qux'],
+        'C': [10, 20, 30, 40, 50]}
+df = pd.DataFrame(data)
+
+# Filter rows where 'A' is greater than 2 and 'B' is equal to 'foo'
+filtered_df = df[(df['A'] > 2) & (df['B'] == 'foo')]
+
+print(filtered_df)
+
+
+
+
+# Filter rows where 'A' is greater than 3 or 'B' is equal to 'bar'
+filtered_df = df[(df['A'] > 3) | (df['B'] == 'bar')]
+
+print(filtered_df)
