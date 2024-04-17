@@ -1,0 +1,14 @@
+import pandas as pd
+
+# Create a sample DataFrame
+data = {
+    'date': ['2024-01-01', '2024-01-01', '2024-01-02', '2024-01-02'],
+    'variable': ['A', 'B', 'A', 'B'],
+    'value': [10, 20, 30, 40]
+}
+df = pd.DataFrame(data)
+
+# Pivot the DataFrame
+pivot_df = df.pivot(index='date', columns='variable', values='value')
+
+print(pivot_df)
