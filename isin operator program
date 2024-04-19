@@ -1,0 +1,11 @@
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': [1, 2, 3, 4, 5],
+        'B': ['foo', 'bar', 'foo', 'baz', 'qux']}
+df = pd.DataFrame(data)
+
+# Filter rows where values in column 'B' are either 'foo' or 'bar'
+filtered_df = df[df['B'].isin(['foo', 'bar'])]
+
+print(filtered_df)
