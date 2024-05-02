@@ -1,0 +1,9 @@
+l1=['I','am','a','boy','and','I','am','Smart']
+stack=[]
+duplicate=[]
+for i in l1:
+    if i not in stack:
+        stack.append(i)
+    else:
+        duplicate.append(i)
+print(set(duplicate))
