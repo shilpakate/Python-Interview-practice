@@ -1,0 +1,9 @@
+l1=[1,2,3]
+l2=['a','b','c']
+d1={}
+for key in l1:
+    for value in l2:
+        d1[key]=value
+        #l2.remove(value)
+        #break
+print(d1)
