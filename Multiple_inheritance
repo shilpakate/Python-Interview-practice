@@ -1,0 +1,24 @@
+class Bird:
+    def __init__(self):
+        print("Bird initialized")
+
+    def fly(self):
+        print("Flying like a bird")
+
+class Airplane:
+    def __init__(self):
+        print("Airplane initialized")
+
+    def fly(self):
+        print("Flying like an airplane")
+
+class FlyingObject(Bird, Airplane):
+    def __init__(self):
+        super().__init__()
+        print("FlyingObject initialized")
+
+# Creating an instance of FlyingObject
+fo = FlyingObject()
+
+# Calling the fly() method
+fo.fly()  # Output: Flying like a bird
