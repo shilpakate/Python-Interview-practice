@@ -1,0 +1,9 @@
+l1=[56,78,67]
+max=sec=0
+for i in l1:
+  if i>max:
+    sec=max
+    max=i
+  elif i<max and i!=max:
+    sec=i
+print(f"Second max num is:{sec}")
