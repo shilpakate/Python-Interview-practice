@@ -1,0 +1,19 @@
+--Given the data below, write a query that will display the subject and the number of students who passed per subject.
+
+select top 2 * from Score1;
+select top 2 * from Baseline
+
+select 
+	s1.subject,
+	count(s1.ID) as Total_passed
+	
+from
+	Score1 s1
+Join
+	Baseline B1
+on
+	s1.SUBJECT= B1.Subject
+where
+	s1.score>b1.pass_score
+group by 
+    s1.subject
