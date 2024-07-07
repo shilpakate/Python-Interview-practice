@@ -1,0 +1,8 @@
+d={1:'abc',2:'abc',3:'d'}
+t={}
+p=[]
+for key,value in d.items():
+    if value not in p:
+        p.append(value)
+        t[key]=value
+print(t)
