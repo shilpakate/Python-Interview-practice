@@ -1,0 +1,19 @@
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+from itertools import groupby
+
+
+a = input()
+grouped = groupby(a)
+result = []
+for char, group in grouped:
+    count = len(list(group))
+    result.append(f"({count}, {char}) ")
+    
+result_str = ''.join(result)
+print(result_str)
+
+
+
+11222
+
+(1,1) ((3.2)   count, no
