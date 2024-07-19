@@ -1,0 +1,9 @@
+# Define two lists
+list1 = [1, 2, 3]
+list2 = ['a', 'b', 'c']
+
+# Use zip to combine them
+zipped = zip(list1, list2)
+
+# Convert the zip object to a list and print it
+print(list(zipped))
